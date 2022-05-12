@@ -32,6 +32,7 @@ class ProductsController < ActionController::Base
   skip_authorize_resource :only => :new
 end
 ```
+Both `skip_authorize_resource` and `skip_load_resource` support `:if` and `:unless` options. Either one takes a method name as a symbol or a lamba/proc. This option will be called to determine if the authorization/loading will be performed.
 
 **important notice about `:manage` rules**
 
@@ -70,7 +71,7 @@ You can specify which actions to affect using the `:except` and `:only` options,
 ```ruby
 load_and_authorize_resource :only => [:index, :show]
 ```
-### Choosing actions on nested resources 
+### Choosing actions on nested resources
 
 For this you can pass a name to skip_authorize_resource.
 For example:
@@ -79,7 +80,7 @@ class CommentsController < ApplicationController
   load_and_authorize_resource :post
   load_and_authorize_resource :through => :post
 
-  skip_authorize_resource :only => :show  
+  skip_authorize_resource :only => :show
   skip_authorize_resource :post, :only => :show
 end
 ```

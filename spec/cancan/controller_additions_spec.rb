@@ -128,6 +128,10 @@ describe CanCan::ControllerAdditions do
     expect(@controller_class.cancan_skipper[:authorize][nil]).to eq(only: %i[index show])
     @controller_class.skip_authorize_resource(:article)
     expect(@controller_class.cancan_skipper[:authorize][:article]).to eq({})
+    @controller_class.skip_authorize_resource(:article, if: -> {})
+    expect(@controller_class.cancan_skipper[:authorize][:article]).to have_key(:if)
+    @controller_class.skip_authorize_resource(:article, unless: -> {})
+    expect(@controller_class.cancan_skipper[:authorize][:article]).to have_key(:unless)
   end
 
   it 'skip_load_resource adds itself to the cancan skipper with given model name and options' do
@@ -137,6 +141,10 @@ describe CanCan::ControllerAdditions do
     expect(@controller_class.cancan_skipper[:load][nil]).to eq(only: %i[index show])
     @controller_class.skip_load_resource(:article)
     expect(@controller_class.cancan_skipper[:load][:article]).to eq({})
+    @controller_class.skip_load_resource(:article, if: -> {})
+    expect(@controller_class.cancan_skipper[:load][:article]).to have_key(:if)
+    @controller_class.skip_load_resource(:article, unless: -> {})
+    expect(@controller_class.cancan_skipper[:load][:article]).to have_key(:unless)
   end
 
   it 'skip_load_and_authore_resource adds itself to the cancan skipper with given model name and options' do
